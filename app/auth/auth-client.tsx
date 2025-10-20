@@ -170,7 +170,7 @@ export default function AuthClientPage() {
                   required={!isSignIn}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2 border text-black border-gray-300 rounded-lg text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                  className="w-full px-3 py-2 border text-black border-gray-300 rounded-lg  shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                   placeholder="Enter your full name"
                 />
               </div>
