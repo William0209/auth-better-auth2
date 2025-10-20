@@ -1,10 +1,13 @@
 "use client";
 
+import { auth } from "@/lib/auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Navigation() {
+type Session = typeof auth.$Infer.Session;
+
+export default function Navigation({ session }: { session: Session | null }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -54,19 +57,23 @@ export default function Navigation() {
               Home
             </Link>
 
-            <Link
-              href="/dashboard"
-              className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
-            >
-              Dashboard
-            </Link>
+            {session && (
+              <Link
+                href="/dashboard"
+                className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
+              >
+                Dashboard
+              </Link>
+            )}
 
-            <Link
-              href="/auth"
-              className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            >
-              Sign In
-            </Link>
+            {!session && (
+              <Link
+                href="/auth"
+                className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Sign In
+              </Link>
+            )}
           </nav>
 
           {/* Mobile menu button */}
@@ -133,26 +140,30 @@ export default function Navigation() {
             >
               Home
             </Link>
-            <Link
-              href="/dashboard"
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                isActive("/dashboard")
-                  ? "text-green-700 bg-green-50"
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/auth"
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                isActive("/auth")
-                  ? "text-green-700 bg-green-50"
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              Sign In
-            </Link>
+            {session && (
+              <Link
+                href="/dashboard"
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  isActive("/dashboard")
+                    ? "text-green-700 bg-green-50"
+                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                }`}
+              >
+                Dashboard
+              </Link>
+            )}
+            {!session && (
+              <Link
+                href="/auth"
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  isActive("/auth")
+                    ? "text-green-700 bg-green-50"
+                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                }`}
+              >
+                Sign In
+              </Link>
+            )}
           </div>
         </div>
       </div>
